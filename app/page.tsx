@@ -5,7 +5,7 @@ export default function Home() {
       <main className="">
         <h1>Lets build AI productivity app</h1>
 
-        <Button>Clcik me</Button>
+        <Button>Click me</Button>
       </main>
     );
 }
