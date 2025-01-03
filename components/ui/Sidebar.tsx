@@ -1,8 +1,11 @@
-import React from 'react'
-
+import NewDocumentButton from './NewDocumentButton';
 function Sidebar() {
   return (
-	<div>Sidebar</div>
+	<div>
+		<NewDocumentButton />
+
+
+	</div>
   )
 }
 
