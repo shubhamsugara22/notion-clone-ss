@@ -8,7 +8,7 @@ import { getFireStore } from "firebase/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyARBdrwMrQzKnMvUl4Osy2zPuLeobHML5A",
+  apiKey: <key></key>,
   authDomain: "notion-clone-4517d.firebaseapp.com",
   projectId: "notion-clone-4517d",
   storageBucket: "notion-clone-4517d.firebasestorage.app",
