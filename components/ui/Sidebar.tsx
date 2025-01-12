@@ -2,7 +2,7 @@
 import { MenuIcon } from 'lucide-react';
 import NewDocumentButton from './NewDocumentButton';
 import { useCollection } from "react-firebase-hooks/firestore";
-
+import SidebarOption from './SidebarOption';
 import {
 	Sheet,
 	SheetContent,
@@ -88,9 +88,8 @@ function Sidebar() {
                 My Documents
               </h2>
               {groupedData.owner.map((doc) => (
-                <p>{doc.roomId}</p>
-                // <SidebarOption key={doc.id} id={doc.id} href={`/doc/${doc.id}
-                // `} /> 
+                <SidebarOption key={doc.id} id={doc.id} href={`/doc/${doc.id}
+                `} /> 
               ))}
             </>
           )}
