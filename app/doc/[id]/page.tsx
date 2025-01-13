@@ -1,13 +1,15 @@
 'use client'
+import Document from "@/components/Document";
 
 function DocumentPage({params: { id },
 }: {
 	params: {
-		id: string
+		id: string;
 	};
 }) {
   return (<div className="flex flex-col flex-1 min-h-screen">
-	 DocumentPage: {id}</div>
+	<Document id={id}/> 
+	</div>
   );
 }
 
