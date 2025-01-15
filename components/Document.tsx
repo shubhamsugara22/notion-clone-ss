@@ -3,7 +3,8 @@
 import { Input } from "./ui/input";
 import { FormEvent, useEffect, useState, useTransition } from "react";
 import { Button } from "./ui/button";
-import { updateDoc } from "firebase/firestore";
+import { doc ,updateDoc } from "firebase/firestore";
+import { db } from "@/firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 
 function Document({ id }: { id: string }) {
