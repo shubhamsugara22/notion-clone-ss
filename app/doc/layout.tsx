@@ -1,6 +1,8 @@
-function PageLayout() {
+import LiveBlocksProvider from "@/components/LiveBlocksProvider"
+
+function PageLayout({children}: {children: React.ReactNode}) {
   return (
-	<div>PageLayout</div>
+	<LiveBlocksProvider>{children}</LiveBlocksProvider>
   )
 }
 
