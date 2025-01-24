@@ -3,13 +3,13 @@ import { auth } from "@clerk/nextjs/server"
 
 function DockLayout({ 
 	children, 
-	params: {id},
+	params: { id },
  }: { 
 	children: React.ReactNode; 
 	params: {id: string}; 
 }) {
 	auth.protect();
-  return (
+    return (
 	<RoomProvider roomId={id}>{children}</RoomProvider>
   )
 }

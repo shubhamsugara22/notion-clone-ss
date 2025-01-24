@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/firebase-admin";
 
 
-export async function POST(req: NextRequest){
+export async function POST(req: NextRequest) {
 	auth.protect(); //Ensure user is authenticated
 
 	const { sessionClaims } = await auth();
