@@ -15,23 +15,23 @@ import stringToColor from "@/lib/stringToColor";
 
 type EditorProps = {
 	doc: Y.Doc;
-	provider: any;
+	provider: LiveblocksYjsProvider;
 	darkMode: boolean;
 };
-    function BlockNote({ doc, provider, darkMode }: EditorProps) {
+function BlockNote({ doc, provider, darkMode }: EditorProps) {
+	const userInfo = useSelf((me) => me.info);
 
-		const userInfo = useSelf((me) => me.info);
-
-		const editor: BlockNoteEditor = useCreateBlockNote({
-			collaboration: {
-				provider,
-				fragment: doc.getXmlFragment("document-store"),
-				user: {
-					name: userInfo?.name,
-					color: stringToColor(userInfo?.email),
-				},
-	     	},
+	const editor: BlockNoteEditor = useCreateBlockNote({
+		collaboration: {
+			provider,
+			fragment: doc.getXmlFragment("document-store"),
+			user: {
+				name: userInfo?.name || "Anonymous",
+				color: stringToColor(userInfo?.email || "default@example.com"),
+			},
+	    },
 	});
+
 	return (
 	  <div className="relative max-w-6xl mx-auto">
 		<BlockNoteView
@@ -56,16 +56,15 @@ function Editor() {
 		setProvider(yProvider);
 
 		return () => {
-			yProvider.destroy();	
+			yDoc?.destroy();
+			yProvider?.destroy();	
 		};
-
 	}, [room]);
 
 	if (!doc || !provider) {
 		return null;
 	
 	}
-
 	const style = `hover:text-white ${
 	   darkMode
 	   ? "text-gray-300 bg-gray-700 hover:bg-gray-100 hover:text-gray-700"

@@ -9,7 +9,7 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import Editor from "./Editor";
 
 function Document({ id }: { id: string }) {
-  const [data, loading, error] = useDocumentData(doc(db, "documents", id));
+  const [data, loading] = useDocumentData(doc(db, "documents", id));
   const [input, setInput] = useState("");
   const [isUpdating, startTransition] = useTransition();
   // const isOwner = useOwner();
@@ -31,9 +31,7 @@ function Document({ id }: { id: string }) {
     });
     }
   };
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+
   return (
 	<div>
     <div className="flex max-w-6xl mx-auto justify-between pb-5">
@@ -41,7 +39,7 @@ function Document({ id }: { id: string }) {
         {/* update title ... */}
         <Input value={input} onChange={(e) => setInput(e.target.value)} />
 
-        <Button disabled={isUpdating} type='submit'>
+        <Button disabled={isUpdating} type='submit' onClick={updateTitle}>
           {isUpdating ? "Updating..." : "Update"}
         </Button>
         {/* IF */}
@@ -57,7 +55,7 @@ function Document({ id }: { id: string }) {
 
     <hr className="pb-10"/>
     {/* Collaborative editor */}
-    <Editor/>
+    <Editor />
   </div>
   )
 }

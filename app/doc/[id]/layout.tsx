@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 
 function DocLayout({ 
 	children, 
-	params: { id },
+	params: { id }
  }: { 
 	children: React.ReactNode; 
 	params: { id: string }; 
