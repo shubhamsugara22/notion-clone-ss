@@ -6,7 +6,6 @@ import { Button } from "./ui/button";
 import { doc ,updateDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
-import { Edit } from "lucide-react";
 import Editor from "./Editor";
 
 function Document({ id }: { id: string }) {
@@ -32,6 +31,9 @@ function Document({ id }: { id: string }) {
     });
     }
   };
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
 	<div>
     <div className="flex max-w-6xl mx-auto justify-between pb-5">

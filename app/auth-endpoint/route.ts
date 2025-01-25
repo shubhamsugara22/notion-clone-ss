@@ -5,7 +5,7 @@ import { adminDb } from "@/firebase-admin";
 
 
 export async function POST(req: NextRequest) {
-	auth.protect(); //Ensure user is authenticated
+	await auth.protect(); //Ensure user is authenticated
 
 	const { sessionClaims } = await auth();
 	const { room } = await req.json();
@@ -19,11 +19,11 @@ export async function POST(req: NextRequest) {
 	});
 
 	const usersInRoom = await adminDb
-	.collectionGroup("rooms")
-	.where("userId", "==", sessionClaims?.email)
-	.get();
+	    .collectionGroup("rooms")
+	    .where("userId", "==", sessionClaims?.email)
+	    .get();
 	
-	const userInRoom = usersInRoom.docs.find((doc) => doc.id == room);
+	const userInRoom = usersInRoom.docs.find((doc) => doc.id === room);
 	
 	if (userInRoom?.exists) {
 		session.allow(room, session.FULL_ACCESS);
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
 		return new Response(body, { status });
 	} else {
 		return NextResponse.json(
-			{ message: "YOu are not in this room" },
+			{ message: "You are not in this room" },
 			{ status: 403 }
 		);
 	}

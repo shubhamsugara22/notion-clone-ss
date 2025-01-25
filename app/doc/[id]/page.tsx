@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import Document from "@/components/Document";
 
 function DocumentPage({
@@ -15,4 +15,4 @@ function DocumentPage({
   );
 }
 
-export default DocumentPage
+export default DocumentPage;

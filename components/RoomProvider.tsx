@@ -6,7 +6,7 @@ import {
 import LoadingSpinner from "./LoadingSpinner";
 import LiveCursorProvider from "./LiveCursorProvider";
 
-function RoomProvider({roomId, children}:{
+function RoomProvider({roomId, children}: {
   roomId: string;
   children: React.ReactNode;
 }) {
@@ -14,14 +14,14 @@ function RoomProvider({roomId, children}:{
 	<RoomProviderWrapper
      id={roomId}
      initialPresence={{
-        cursor: null
+        cursor: null,
      }}               
   >
-  <ClientSideSuspense fallback={<LoadingSpinner />}>
-  <LiveCursorProvider>
-  {children}
-  </LiveCursorProvider>
-  </ClientSideSuspense>
+      <ClientSideSuspense fallback={<LoadingSpinner />}>
+      <LiveCursorProvider>
+          {children}
+      </LiveCursorProvider>
+      </ClientSideSuspense>
   </RoomProviderWrapper>
   )
 }
