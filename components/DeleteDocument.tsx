@@ -12,14 +12,33 @@ import {
 import { useState, useTransition } from "react";
 import { Button } from "./ui/button";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { usePathname , useRouter} from "next/navigation";
+import { deleteDocument } from "@/actions/actions";
 
 function DeleteDocument() {
 
   const [isOpen, setIsOpen] = useState(false);
-
   const [isPending, startTransition] = useTransition();
+  const pathname = usePathname();
+  const router = useRouter();
 
-  const handleDelete = async () => {};
+
+  const handleDelete = async () => {
+    const roomId = pathname.split("/").pop();
+    if(!roomId) return;
+
+    startTransition(async () => {
+      const { success } = await deleteDocument(roomId);
+
+      if (success) {
+        setIsOpen(false);
+        router.replace("/");
+        // toast.success("Room deleted successfully");
+      } else {
+        // toast.error("Failed to delete room");
+        }
+    });
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
