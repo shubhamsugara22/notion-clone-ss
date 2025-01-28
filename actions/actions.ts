@@ -66,7 +66,7 @@ export async function deleteDocument(roomId: string) {
 	console.log("inviteUserToDocument", roomId, email);
 
 	try {
-		await adminDb
+	   await adminDb
 		.collection("users")
 		.doc(email)
 		.collection("rooms")

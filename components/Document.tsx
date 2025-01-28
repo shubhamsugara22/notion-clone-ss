@@ -57,7 +57,8 @@ function Document({ id }: { id: string }) {
               
       </form>
       </div>
-    <div>
+    <div className="flex max-w-6xl mx-auto justify-between items-center mb-5">
+      <ManageUsers />
       {/* ManageUsers */}
 
       {/* Avatars */}
