@@ -10,6 +10,7 @@ import Editor from "./Editor";
 import useOwner from "@/lib/useOwner";
 import { Delete } from "lucide-react";
 import DeleteDocument from "./DeleteDocument";
+import InviteUser from "./InviteUser";
 
 function Document({ id }: { id: string }) {
   const [data, loading] = useDocumentData(doc(db, "documents", id));
@@ -45,16 +46,15 @@ function Document({ id }: { id: string }) {
         <Button disabled={isUpdating} type='submit' onClick={updateTitle}>
           {isUpdating ? "Updating..." : "Update"}
         </Button>
-        {/* IF */}
+        
         { isOwner && (
           <>
           {/* InviteUser */}
-          {/* DeleteDocument */}
+          <InviteUser />
           <DeleteDocument />
           </>
         )}
-        {/* isOwner && inviteuser , deletedocument */}
-      
+              
       </form>
       </div>
     <div>
