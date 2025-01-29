@@ -1,16 +1,3 @@
-import React from 'react'
-
-function ManageUsers() {
-  return (
-	<div>
-	  
-	</div>
-  )
-}
-
-export default ManageUsers
-
-
 'use client';
 
 import {
@@ -27,64 +14,51 @@ import { usePathname , useRouter} from "next/navigation";
 import { InviteUserToDocument } from "@/actions/actions";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input"
+import { useUser } from "@clerk/nextjs";
+import { useRoom } from "@liveblocks/react/suspense";
+import useOwner from "@/lib/useOwner";
+import { useCollection } from "react-firebase-hooks/firestore";
+import { collectionGroup, query, where } from "firebase/firestore";
+import { db } from "@/firebase";
 
-function InviteUser() {
-
+function ManageUsers() {
+  const { user } = useUser();
+  const room = useRoom();
+  const isOwner = useOwner();
   const [isOpen, setIsOpen] = useState(false);
-  const [email, setEmail] = useState("");
   const [isPending, startTransition] = useTransition();
-  const pathname = usePathname();
-  const router = useRouter();
 
 
-  const handleInvite = async (e: FormEvent) => {
-	e.preventDefault();
+  const [usersInRoom] = useCollection(
+    user && query(collectionGroup(db, "rooms"), where("roomId", "==", 
+      room.id))
+  );
 
-    const roomId = pathname.split("/").pop();
-    if(!roomId) return;
+  const handleDelete = (userId: string) => {
 
-    startTransition(async () => {
-      const { success } = await InviteUserToDocument(roomId, email);
-
-      if (success) {
-        setIsOpen(false);
-        setEmail("");
-        toast.success("User added to room successfully");
-      } else {
-        toast.error("Failed to add user to room");
-        }
-    });
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <Button asChild variant="outline">
-      <DialogTrigger>Invite</DialogTrigger>
+      <DialogTrigger>Users</DialogTrigger>
       </Button>
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Invite a User to collaborate!</DialogTitle>
+        <DialogTitle>Users with Access</DialogTitle>
         <DialogDescription>
-         Enter the email of user you want to invite.
+         Below is a list of users who have access to this document.
         </DialogDescription>
       </DialogHeader>
-      <form className="flex gap-2" onSubmit={handleInvite}>
-		<Input
-		 type="email"
-		 placeholder="Email"
-		 className="w-full"
-		 value={email}
-		 onChange={(e) => setEmail(e.target.value)}
-		 />
-		 <Button type="submit" disabled={!email || isPending}>
-			{isPending ? "Inviting..." : "Invite"}
-		</Button>
-	  </form>
 
+      <hr className="my-2" />
+      <div>
+        {/* UsersInRoom... */}
+      </div>
     </DialogContent>
   </Dialog>
   
   )
 }
 
-export default InviteUser
+export default ManageUsers;

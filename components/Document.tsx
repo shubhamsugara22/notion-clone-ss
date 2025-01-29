@@ -11,6 +11,7 @@ import useOwner from "@/lib/useOwner";
 import { Delete } from "lucide-react";
 import DeleteDocument from "./DeleteDocument";
 import InviteUser from "./InviteUser";
+import ManageUsers from "./ManageUsers";
 
 function Document({ id }: { id: string }) {
   const [data, loading] = useDocumentData(doc(db, "documents", id));
