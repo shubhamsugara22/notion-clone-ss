@@ -12,6 +12,7 @@ import { Delete } from "lucide-react";
 import DeleteDocument from "./DeleteDocument";
 import InviteUser from "./InviteUser";
 import ManageUsers from "./ManageUsers";
+import Avatars from "./Avatars";
 
 function Document({ id }: { id: string }) {
   const [data, loading] = useDocumentData(doc(db, "documents", id));
@@ -50,7 +51,6 @@ function Document({ id }: { id: string }) {
         
         { isOwner && (
           <>
-          {/* InviteUser */}
           <InviteUser />
           <DeleteDocument />
           </>
@@ -60,9 +60,9 @@ function Document({ id }: { id: string }) {
       </div>
     <div className="flex max-w-6xl mx-auto justify-between items-center mb-5">
       <ManageUsers />
-      {/* ManageUsers */}
 
-      {/* Avatars */}
+
+      <Avatars />
     </div>
 
     <hr className="pb-10"/>
