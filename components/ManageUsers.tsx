@@ -41,7 +41,7 @@ function ManageUsers() {
 
       const { success } = await removeUserFromDocument(room.id, userId);
 
-      if (!success) {
+      if (success) {
         toast.error("User removed  from room  successfully");
       } else {
         toast.error("Failed to remove user from room");
