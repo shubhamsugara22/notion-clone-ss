@@ -12,7 +12,7 @@ import {
 
 import { Button } from "./ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 
 
 type Language =
@@ -41,6 +41,20 @@ const languages: Language[] =[
 ];
 function TranslateDocument({ doc }: {doc: Y.Doc }) {
 	const [isOpen, setIsOpen] = useState(false);
+	const [language, setLanguage] = useState<string>("");
+	const [summary, setSummary] = useState("");
+	const [question, setQuestion] = useState("");
+	const [isPending, startTransition] = useTransition();
+
+  const handleAskQuestion = async ( e: React.FormEvent) => {
+	e.preventDefault();
+
+	startTransition(async () => {
+
+	})
+  };
+
+
 
   return <Dialog open={isOpen} onOpenChange={setIsOpen}>
   <Button asChild variant="outline">
@@ -53,7 +67,7 @@ function TranslateDocument({ doc }: {doc: Y.Doc }) {
 	 Enter the email of user you want to invite.
 	</DialogDescription>
   </DialogHeader>
-  <form className="flex gap-2" onSubmit={handleInvite}>
+  <form className="flex gap-2" onSubmit={handleAskQuestion}>
 	<Input
 	 type="email"
 	 placeholder="Email"
@@ -61,8 +75,8 @@ function TranslateDocument({ doc }: {doc: Y.Doc }) {
 	 value={email}
 	 onChange={(e) => setEmail(e.target.value)}
 	 />
-	 <Button type="submit" disabled={!email || isPending}>
-		{isPending ? "Inviting..." : "Invite"}
+	 <Button type="submit" disabled={!language || isPending}>
+		{isPending ? "Translating..." : "Translate"}
 	</Button>
   </form>
 
