@@ -12,6 +12,7 @@ import "@blocknote/core/fonts/inter.css";
 import "@blocknote/mantine/style.css";
 import { useSelf } from "@liveblocks/react";
 import stringToColor from "@/lib/stringToColor";
+import TranslateDocument from "./TranslateDocument";
 
 type EditorProps = {
 	doc: Y.Doc;
