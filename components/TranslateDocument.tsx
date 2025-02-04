@@ -85,6 +85,14 @@ function TranslateDocument({ doc }: {doc: Y.Doc }) {
 		    <SelectTrigger className="w-full">
 			    <SelectValue placeholder="Select a Language" />
 		    </SelectTrigger>
+			
+			<SelectContent>
+				{languages.map((language) => (
+					<SelectItem key={language} value={language}>
+						{language.charAt(0).toUpperCase() + language.slice(1)}
+					</SelectItem>
+				))}
+			</SelectContent>
 	    </Select>
 
 	    <Button type="submit" disabled={!language || isPending}>
