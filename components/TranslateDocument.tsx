@@ -11,8 +11,7 @@ import {
   } from "@/components/ui/dialog"
 
 import { Button } from "./ui/button";
-import { Input } from "@/components/ui/input";
-import { useState, useTransition } from "react";
+import { FormEvent, useState, useTransition } from "react";
 
 import {
 	Select,
@@ -28,7 +27,7 @@ import Markdown from "react-markdown";
 type Language =
   |  "english"
   |  "spanish"
-  |  "portugese"
+  |  "portuguese"
   |  "french"
   |  "german"
   |  "chinese"
@@ -40,7 +39,7 @@ type Language =
 const languages: Language[] =[
 	"english",
 	"spanish",
-	"portugese",
+	"portuguese",
 	"french",
 	"german",
 	"chinese",
@@ -56,11 +55,11 @@ function TranslateDocument({ doc }: {doc: Y.Doc }) {
 	const [question, setQuestion] = useState("");
 	const [isPending, startTransition] = useTransition();
 
-  const handleAskQuestion = async ( e: React.FormEvent) => {
+  const handleAskQuestion = async ( e: FormEvent) => {
 	e.preventDefault();
 
 	startTransition(async () => {
-		const documentData = doc.get("document-store").toJSON();
+		const documentData = doc.get('document-store').toJSON();
 
 		const res = await fetch(
 			`${process.env.NEXT_PUBLIC_BASE_URL}/translateDocument`,
@@ -78,9 +77,8 @@ function TranslateDocument({ doc }: {doc: Y.Doc }) {
 
 		if(res.ok) {
 			const { translated_text } = await res.json();
-
 			setSummary(translated_text);
-			toast.success("Translate Summary Successfully");
+			toast.success("Translated Summary Successfully");
 		}
 	});
   };
