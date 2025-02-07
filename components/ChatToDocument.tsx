@@ -1,5 +1,5 @@
 'use client';
-
+import * as Y from "yjs";
 import {
   Dialog,
   DialogContent,
@@ -14,56 +14,64 @@ import { usePathname , useRouter} from "next/navigation";
 import { InviteUserToDocument } from "@/actions/actions";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input"
+import { MessageCircleCode, BotIcon } from "lucide-react";
+import Markdown from "react-markdown";
 
-function ChatToDocument() {
+
+function ChatToDocument({ doc }: {doc: Y.Doc }) {
 	const [input, setInput] = useState("");
 	const [isOpen, setIsOpen] = useState(false);
 	const [isPending, startTransition] = useTransition();
 	const [summary, setSummary] = useState("");
 	const [question, setQuestion] = useState("");
 	
-
-  const handleInvite = async (e: FormEvent) => {
+  const handleAskQuestion = async (e: FormEvent) => {
 	e.preventDefault();
 
-    const roomId = pathname.split("/").pop();
-    if(!roomId) return;
-
-    startTransition(async () => {
-      const { success } = await InviteUserToDocument(roomId, email);
-
-      if (success) {
-        setIsOpen(false);
-        setEmail("");
-        toast.success("User added to room successfully");
-      } else {
-        toast.error("Failed to add user to room");
-        }
-    });
+  setQuestion(input);
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <Button asChild variant="outline">
-      <DialogTrigger>Invite</DialogTrigger>
+      <DialogTrigger>
+		    <MessageCircleCode className="mr-2"/>
+		      Chat to Document
+	    </DialogTrigger>
       </Button>
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Invite a User to collaborate!</DialogTitle>
+        <DialogTitle>Chat to the document</DialogTitle>
         <DialogDescription>
-         Enter the email of user you want to invite.
+         Ask a question and chat to the document with AI.
         </DialogDescription>
+        <hr className="mt-5" />
+        {question && <p className="mt-5 text-gray-500">Q: {question}</p>}
+      
       </DialogHeader>
-      <form className="flex gap-2" onSubmit={handleInvite}>
+
+    	{ 
+	summary && (
+		<div className="flex flex-col items-start max-h-96 overflow-y-scroll gap-2 p-5 bg-gray-100">
+			<div className="flex">
+				<BotIcon className="w-10 flex-shrink-0"/>
+				<p className="font-bold">
+					GPT {isPending ? "is thinking..." : "Says:"}
+				</p>
+			</div>
+			<p>{isPending ? "Thinking..." : <Markdown>{summary}</Markdown>}</p>
+		</div>
+	)}
+      <form className="flex gap-2" onSubmit={handleAskQuestion}>
 		<Input
-		 type="email"
-		 placeholder="Email"
+		 type="text"
+		 placeholder="i.e what is this about?"
 		 className="w-full"
-		 value={email}
-		 onChange={(e) => setEmail(e.target.value)}
+		 value={input}
+		 onChange={(e) => setInput(e.target.value)}
 		 />
-		 <Button type="submit" disabled={!email || isPending}>
-			{isPending ? "Inviting..." : "Invite"}
+		 <Button type="submit" disabled={!input || isPending}>
+			{isPending ? "Asking..." : "Ask"}
 		</Button>
 	  </form>
 
