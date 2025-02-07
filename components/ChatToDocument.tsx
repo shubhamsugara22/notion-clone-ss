@@ -29,6 +29,32 @@ function ChatToDocument({ doc }: {doc: Y.Doc }) {
 	e.preventDefault();
 
   setQuestion(input);
+
+  startTransition(async () => {
+    const documentData = doc.get("document-store").toJSON();
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/chatToDocument`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+           documentData,
+           question: input,
+        }),
+      }
+    );
+
+    if(res.ok) {
+      const { message } = await res.join();
+
+      setInput("");
+      setSummary(message);
+
+      toast.success("Question asked successfully");
+    }
+  })
   };
 
   return (
