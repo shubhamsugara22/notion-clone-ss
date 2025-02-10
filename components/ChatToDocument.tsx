@@ -47,12 +47,12 @@ function ChatToDocument({ doc }: {doc: Y.Doc }) {
     );
 
     if(res.ok) {
-      const { message } = await res.join();
-
+      const { message } = await res.json();
       setInput("");
       setSummary(message);
-
       toast.success("Question asked successfully");
+    } else {
+      toast.error("Failed to ask question");
     }
   })
   };
@@ -77,29 +77,29 @@ function ChatToDocument({ doc }: {doc: Y.Doc }) {
       </DialogHeader>
 
     	{ 
-	summary && (
-		<div className="flex flex-col items-start max-h-96 overflow-y-scroll gap-2 p-5 bg-gray-100">
-			<div className="flex">
-				<BotIcon className="w-10 flex-shrink-0"/>
-				<p className="font-bold">
-					GPT {isPending ? "is thinking..." : "Says:"}
-				</p>
-			</div>
-			<p>{isPending ? "Thinking..." : <Markdown>{summary}</Markdown>}</p>
-		</div>
-	)}
+	    summary && (
+		    <div className="flex flex-col items-start max-h-96 overflow-y-scroll gap-2 p-5 bg-gray-100">
+			    <div className="flex">
+				      <BotIcon className="w-10 flex-shrink-0"/>
+				      <p className="font-bold">
+					        GPT {isPending ? "is thinking..." : "Says:"}
+				      </p>
+			    </div>
+			  <p>{isPending ? "Thinking..." : <Markdown>{summary}</Markdown>}</p>
+		  </div>
+	    )}
       <form className="flex gap-2" onSubmit={handleAskQuestion}>
-		<Input
-		 type="text"
-		 placeholder="i.e what is this about?"
-		 className="w-full"
-		 value={input}
-		 onChange={(e) => setInput(e.target.value)}
-		 />
-		 <Button type="submit" disabled={!input || isPending}>
-			{isPending ? "Asking..." : "Ask"}
-		</Button>
-	  </form>
+		    <Input
+		      type="text"
+		      placeholder="i.e what is this about?"
+		      className="w-full"
+		      value={input}
+		      onChange={(e) => setInput(e.target.value)}
+		    />
+		    <Button type="submit" disabled={!input || isPending}>
+			    {isPending ? "Asking..." : "Ask"}
+		    </Button>
+	    </form>
 
     </DialogContent>
   </Dialog>
